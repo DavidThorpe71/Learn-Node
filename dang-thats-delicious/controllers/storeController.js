@@ -1,5 +1,8 @@
 exports.myMiddleware = (req, res, next) => {
-	req.name = 'Wes';
+	req.name = 'David';
+	if(req.name === 'David') {
+		throw Error('That is a stupid name');
+	}
 	next();
 }
 
