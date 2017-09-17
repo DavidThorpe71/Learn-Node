@@ -86,7 +86,7 @@ exports.updateStore = async (req, res) => {
 }
 
 exports.getStoreBySlug = async (req, res, next) => {
-	const store = await Store.findOne({ slug: req.params.slug }).populate('author');
+	const store = await Store.findOne({ slug: req.params.slug }).populate('author reviews');
 	if(!store) return next();
 	res.render('store', { store, title: store.name });
 };
@@ -152,3 +152,10 @@ exports.heartStore = async(req, res) => {
 
 	res.json(user);
 }
+
+exports.getHearts = async(req, res) => {
+	const stores = await Store.find({
+		_id: { $in: req.user.hearts }
+	});
+	res.render('stores', {title: 'Hearted Stores', stores });
+};
